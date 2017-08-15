@@ -1,5 +1,5 @@
-import autocomplete_light
+import dal
 from .models import StudentWorker
-from ecwsp.sis.autocomplete_light_registry import UserAutocomplete
+from ecwsp.sis.dal_registry import UserAutocomplete
 
-autocomplete_light.register(StudentWorker, UserAutocomplete)
+dal.register(StudentWorker, UserAutocomplete)

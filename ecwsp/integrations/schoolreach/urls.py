@@ -1,6 +1,6 @@
 from django.conf.urls import *
 from ecwsp.integrations.schoolreach import views
 
-urlpatterns = patterns('',
+urlpatterns = [url
     (r'^setup/$', views.setup),
 )

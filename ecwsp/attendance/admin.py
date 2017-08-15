@@ -1,3 +1,5 @@
+from django.forms import modelform_factory
+
 from django.contrib import admin
 from django.contrib import messages
 from django import forms
@@ -5,10 +7,9 @@ from daterange_filter.filter import DateRangeFilter
 
 from ecwsp.attendance.models import StudentAttendance, CourseSectionAttendance, AttendanceLog, AttendanceStatus
 
-import autocomplete_light
 
 class StudentAttendanceAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(StudentAttendance)
+    form = modelform_factory(StudentAttendance, fields=('student', 'date', 'status', 'notes', 'time'))
     list_display = ['student', 'date', 'status', 'notes', 'time']
     list_filter = [
         ('date', DateRangeFilter),

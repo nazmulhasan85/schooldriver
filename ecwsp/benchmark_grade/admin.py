@@ -4,15 +4,16 @@ from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from ecwsp.benchmark_grade.models import Category, Item, Demonstration, Mark, Aggregate
 from ecwsp.benchmark_grade.models import CalculationRulePerCourseCategory, CalculationRuleCategoryAsCourse, CalculationRuleSubstitution, CalculationRule, AssignmentType 
 
-import reversion
+from reversion.admin import VersionAdmin
+
 
 admin.site.register(Category)
-admin.site.register(Item, reversion.VersionAdmin)
+admin.site.register(Item, VersionAdmin)
 admin.site.register(Demonstration)
 admin.site.register(Aggregate)
 admin.site.register(AssignmentType)
 
-class MarkAdmin(reversion.VersionAdmin):
+class MarkAdmin(VersionAdmin):
     raw_id_fields = ('item',)
     related_lookup_fields = {
         'fk': ['demostration',],

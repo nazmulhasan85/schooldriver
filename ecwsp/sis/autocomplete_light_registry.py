@@ -1,7 +1,7 @@
-import autocomplete_light
+import dal
 from .models import Student, EmergencyContact, Faculty
 
-class UserAutocomplete(autocomplete_light.AutocompleteModelBase):
+class UserAutocomplete(dal.AutocompleteModelBase):
     split_words = True
     search_fields = ['first_name', 'last_name']
     attrs = {
@@ -17,10 +17,10 @@ class FacultyAutocomplete(UserAutocomplete):
 class ActiveStudentAutocomplete(UserAutocomplete):
     choices=Student.objects.filter(is_active=True)
 
-class LookupStudentAutocomplete(UserAutocomplete, autocomplete_light.AutocompleteModelTemplate):
+class LookupStudentAutocomplete(UserAutocomplete, dal.AutocompleteModelTemplate):
     autocomplete_template = 'sis/lookup_student.html'
 
-class ContactAutocomplete(autocomplete_light.AutocompleteModelTemplate):
+class ContactAutocomplete(dal.AutocompleteModelTemplate):
     split_words = True
     search_fields = ['fname', 'lname']
     attrs = {
@@ -28,8 +28,8 @@ class ContactAutocomplete(autocomplete_light.AutocompleteModelTemplate):
     }
     choice_template = 'sis/autocomplete_contact.html'
 
-autocomplete_light.register(EmergencyContact, ContactAutocomplete)
-autocomplete_light.register(Student, UserAutocomplete)
-autocomplete_light.register(Student, ActiveStudentAutocomplete)
-autocomplete_light.register(Faculty, FacultyAutocomplete)
-autocomplete_light.register(Student, LookupStudentAutocomplete)
+dal.register(EmergencyContact, ContactAutocomplete)
+dal.register(Student, UserAutocomplete)
+dal.register(Student, ActiveStudentAutocomplete)
+dal.register(Faculty, FacultyAutocomplete)
+dal.register(Student, LookupStudentAutocomplete)

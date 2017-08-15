@@ -1,7 +1,8 @@
 from django.contrib import admin
+from django.forms import modelform_factory
 
 from daterange_filter.filter import DateRangeFilter
-import autocomplete_light
+import dal
 
 from .models import DisciplineActionInstance, Infraction, StudentDiscipline, DisciplineAction
 
@@ -10,7 +11,7 @@ class DisciplineActionInstanceInline(admin.TabularInline):
     extra = 1
     
 class StudentDisciplineAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(StudentDiscipline)
+    form = modelform_factory(StudentDiscipline, fields=('date', 'students', 'teacher', 'infraction', 'comments', 'private_note'))
     list_per_page = 50
     fields = ['date', 'students', 'teacher', 'infraction', 'comments', 'private_note']
     list_display = ('show_students', 'date', 'comment_brief', 'infraction')

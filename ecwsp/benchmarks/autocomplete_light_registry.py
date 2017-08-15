@@ -1,7 +1,7 @@
-import autocomplete_light
+import dal
 from .models import Benchmark
 
-class BenchmarkAutocomplete(autocomplete_light.AutocompleteModelBase):
+class BenchmarkAutocomplete(dal.AutocompleteModelBase):
     search_fields = ['number', 'name']
 
-autocomplete_light.register(Benchmark, BenchmarkAutocomplete)
+dal.register(Benchmark, BenchmarkAutocomplete)

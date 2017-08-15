@@ -17,7 +17,7 @@ from ecwsp.schedule.calendar import Calendar
 from ecwsp.schedule.models import MarkingPeriod, Department, CourseMeet, Period, CourseSection, Course, CourseSectionTeacher, CourseEnrollment
 from ecwsp.grades.models import Grade
 from ecwsp.discipline.models import DisciplineAction, DisciplineActionInstance
-import autocomplete_light
+import dal
 import datetime
 from decimal import Decimal
 from openpyxl.cell import get_column_letter
@@ -356,7 +356,7 @@ class CohortFilter(ModelMultipleChoiceFilter):
 
 class SelectSpecificStudentsForm(forms.Form):
     try:
-        select_students = autocomplete_light.MultipleChoiceField('StudentUserAutocomplete', required=False)
+        select_students = dal.MultipleChoiceField('StudentUserAutocomplete', required=False)
     except ProgrammingError:
         pass
 
@@ -372,7 +372,7 @@ class SelectSpecificStudents(ModelMultipleChoiceFilter):
         self.form = SelectSpecificStudentsForm()
         self.form.fields['filter_number'] = forms.IntegerField(widget=forms.HiddenInput())
         # This is a hack to force it to accept these choices, otherwise choices gets set to []
-        self.form.fields['select_students'] = autocomplete_light.ModelMultipleChoiceField('StudentUserAutocomplete', required=False)
+        self.form.fields['select_students'] = dal.ModelMultipleChoiceField('StudentUserAutocomplete', required=False)
 
     def queryset_filter(self, queryset, report_context=None, **kwargs):
         selected = self.cleaned_data['select_students']

@@ -14,7 +14,7 @@ from django.utils.html import conditional_escape
 from django.conf import settings
 from constance import config
 
-import autocomplete_light
+import dal
 from decimal import Decimal
 from datetime import datetime, date
 from itertools import chain
@@ -162,7 +162,7 @@ class ReportTemplateForm(StudentReportWriterForm):
     date_begin = None
     date_end = None
     try:
-        student = autocomplete_light.MultipleChoiceField('StudentUserAutocomplete', required=False)
+        student = dal.MultipleChoiceField('StudentUserAutocomplete', required=False)
     except ProgrammingError:
         pass
 

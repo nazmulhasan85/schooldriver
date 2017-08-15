@@ -1,3 +1,5 @@
+from django.forms import modelform_factory
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
@@ -18,7 +20,7 @@ from ecwsp.sis.models import (Student, StudentNumber, EmergencyContactNumber, Tr
         SchoolYear, GradeScale, GradeScaleRule, MessageToStudent, FamilyAccessUser)
 from ecwsp.schedule.models import AwardStudent, MarkingPeriod, CourseEnrollment, CourseSection
 from custom_field.custom_field import CustomFieldAdmin
-import autocomplete_light
+import dal
 
 
 def mark_inactive(modeladmin, request, queryset):
@@ -69,7 +71,7 @@ class StudentAwardInline(admin.TabularInline):
 
 class StudentCohortInline(admin.TabularInline):
     model = Student.cohorts.through
-    form = autocomplete_light.modelform_factory(Student.cohorts.through)
+    form = modelform_factory(Student.cohorts.through, fields=('student','cohort','primary'))
     extra = 0
 
 class StudentECInline(admin.TabularInline):
@@ -105,7 +107,7 @@ admin.site.register(Faculty, FacultyAdmin)
 
 class StudentCourseSectionInline(admin.TabularInline):
     model = CourseEnrollment
-    form = autocomplete_light.modelform_factory(CourseEnrollment)
+    form = modelform_factory(CourseEnrollment, fields=('course_section','user','attendance_note','exclude_days'))
     fields = ('course_section', 'attendance_note')
     extra = 0
     classes = ('grp-collapse grp-closed',)
@@ -197,7 +199,7 @@ class StudentAdmin(VersionAdmin, CustomFieldAdmin):
         ),)
 
     change_list_template = "admin/sis/student/change_list.html"
-    form = autocomplete_light.modelform_factory(Student)
+    form = modelform_factory(Student,fields=('first_name','last_name','year','is_active'))
     readonly_fields = ['year']
     search_fields = ['first_name', 'last_name', 'username', 'unique_id', 'street', 'state', 'zip', 'id', 'studentnumber__number']
     inlines = [StudentCourseSectionInline, StudentNumberInline, StudentCohortInline, StudentFileInline, StudentHealthRecordInline, TranscriptNoteInline, StudentAwardInline]
@@ -341,6 +343,7 @@ class UserForm(UserChangeForm):
     """ Extended User form to provide extra validation """
     class Meta:
         model = User
+        fields = "__all__"
 
     def clean(self):
         super(UserForm, self).clean()

@@ -3,14 +3,14 @@ from localflavor.us.forms import *
 from django.contrib.admin import widgets as adminwidgets
 from django.conf import settings
 
-import autocomplete_light
+import dal
 from ecwsp.sis.forms import TimeBasedForm
 from ecwsp.administration.models import Configuration
 from models import *
 from ecwsp.sis.models import Student
 import datetime
 
-class DisciplineViewForm(autocomplete_light.ModelForm):
+class DisciplineViewForm(dal.ModelForm):
     student = forms.ModelChoiceField(queryset=Student.objects.all())
     
 class DisciplineForm(forms.ModelForm):

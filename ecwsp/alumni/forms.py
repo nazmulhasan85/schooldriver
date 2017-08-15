@@ -14,6 +14,7 @@ class AlumniNoteForm(forms.ModelForm):
 class AlumniForm(forms.ModelForm):
     class Meta:
         model = Alumni
+        fields ="__all__"
     
     def clean(self):
         data = self.cleaned_data

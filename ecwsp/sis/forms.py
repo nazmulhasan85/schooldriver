@@ -9,14 +9,14 @@ from tempfile import mkstemp
 from ecwsp.sis.models import Student, UserPreference, SchoolYear, GradeLevel, Cohort
 from ecwsp.schedule.models import MarkingPeriod, CourseMeet, Award
 from ecwsp.administration.models import Template
-import autocomplete_light
+import dal
 import datetime
 
-autocomplete_light.autodiscover()
 
 class UserPreferenceForm(forms.ModelForm):
     class Meta:
         model = UserPreference
+        fields = "__all__"
         widgets = {
             'prefered_file_format': forms.Select,
             'include_deleted_students': forms.CheckboxInput,
@@ -28,14 +28,14 @@ class UserPreferenceForm(forms.ModelForm):
 class DeletedStudentLookupForm(forms.Form):
     # See https://github.com/yourlabs/django-autocomplete-light/issues/315
     try:
-        student = autocomplete_light.ModelChoiceField('StudentUserAutocomplete')
+        student = forms.ModelChoiceField('StudentUserAutocomplete')
     except ProgrammingError:
         pass
 
 
 class StudentLookupForm(forms.Form):
     try:
-        student = autocomplete_light.ModelChoiceField('StudentActiveStudentAutocomplete')
+        student = forms.ModelChoiceField('StudentActiveStudentAutocomplete')
     except ProgrammingError:
         pass
 
@@ -96,7 +96,7 @@ class StudentSelectForm(TimeBasedForm):
     """ Generic student selection form."""
     all_students = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'onclick':''}))
     try:
-        student = autocomplete_light.ModelChoiceField('StudentActiveStudentAutocomplete')
+        student = forms.ModelChoiceField('StudentActiveStudentAutocomplete')
     except ProgrammingError:
         pass
     sort_by = forms.ChoiceField(choices=(('last_name', 'Student last name'), ('year', 'School year'), ('cohort', 'Primary Cohort')), initial=1)

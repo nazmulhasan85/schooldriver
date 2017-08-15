@@ -19,20 +19,33 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components/')
 
 LOGIN_REDIRECT_URL = "/"
 MULTI_TENANT = os.getenv('MULTI_TENANT', False)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('DATABASE_NAME', 'postgres'),
+#         'USER': os.getenv('DATABASE_USER', 'postgres'),
+#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+#         'HOST': os.getenv('DATABASE_ADDR', 'db_1'),
+#         'PORT': 5432,
+#         # If a timeout is not specified, psycopg2 will wait forever, and the
+#         # executing thread will get stuck indefinitely. A bunch of requests
+#         # during a Postgres disruption would paralyze the server completely.
+#         'OPTIONS': {'connect_timeout': 15},
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DATABASE_NAME', 'postgres'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_ADDR', 'db_1'),
-        'PORT': 5432,
-        # If a timeout is not specified, psycopg2 will wait forever, and the
-        # executing thread will get stuck indefinitely. A bunch of requests
-        # during a Postgres disruption would paralyze the server completely.
+        'NAME': 'school',
+        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'OPTIONS': {'connect_timeout': 15},
     }
 }
+
 
 for environment_variable in (
     'EMAIL_HOST',
@@ -387,7 +400,8 @@ TENANT_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.admin',
-    'autocomplete_light',
+    'dal',
+    'social_django',
     'social.apps.django_app.default',
     'ldap_groups',
     'ecwsp.sis',

@@ -4,7 +4,7 @@ from localflavor.us.forms import *
 from localflavor.us.us_states import STATE_CHOICES
 from django.core.validators import RegexValidator
 import re
-import autocomplete_light
+import dal
 from localflavor.us import forms as us_forms
 
 from ecwsp.administration.models import Template
@@ -52,9 +52,10 @@ class InquiryForm(forms.ModelForm):
         
 
 
-class ApplicantForm(autocomplete_light.ModelForm):
+class ApplicantForm(forms.ModelForm):
     class Meta:
         model = Applicant
+        fields ="__all__"
         widgets = {
             'total_income': NumberInput(attrs={'style':'text-align:right;','step':.01}),
             'adjusted_available_income': NumberInput(attrs={'style':'text-align:right;','step':.01}),

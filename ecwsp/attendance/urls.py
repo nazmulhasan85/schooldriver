@@ -1,7 +1,7 @@
 from django.conf.urls import *
 from ecwsp.attendance import views
 
-urlpatterns = patterns('',
+urlpatterns = [url
     (r'^teacher_submissions/$', views.teacher_submissions),
     (r'^studentattendance/report/$', views.attendance_report),
     (r'^studentattendance/student/(?P<id>\d+)/$', views.attendance_student),

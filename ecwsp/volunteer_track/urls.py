@@ -1,7 +1,7 @@
 from django.conf.urls import *
 from ecwsp.volunteer_track.views import *
 
-urlpatterns = patterns('',
+urlpatterns = [url
     (r'^volunteer/$', student_dash),
     (r'^volunteer/site$', student_site_approval),
     (r'^volunteer/hours/(?P<id>\d+)/$', student_hours),

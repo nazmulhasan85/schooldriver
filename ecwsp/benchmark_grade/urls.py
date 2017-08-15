@@ -2,7 +2,7 @@ from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import views
 
-urlpatterns = patterns('',
+urlpatterns = [url
     (r'^student_report$', views.student_report),
     (r'^student_report/(?P<student_pk>\d+)$', views.student_report),
     (r'^student_report/(?P<student_pk>\d+)/(?P<marking_period_pk>\d+)$', views.student_report),

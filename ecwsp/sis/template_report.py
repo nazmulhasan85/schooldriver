@@ -1,5 +1,5 @@
 from appy.pod.renderer import Renderer
-from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
 from django.http import HttpResponse
 from ecwsp.administration.models import Configuration
 from ecwsp.sis.models import SchoolYear, UserPreference

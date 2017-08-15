@@ -16,8 +16,10 @@ from decimal import Decimal
 from datetime import datetime, date
 
 class TemplateForm(forms.ModelForm):
+
     class Meta:
         model = TimeSheet
+        fields = "__all__"
 
     def clean(self):
         super(TemplateForm, self).clean()

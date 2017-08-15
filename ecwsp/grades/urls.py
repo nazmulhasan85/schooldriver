@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from ecwsp.grades import views
 
 
-urlpatterns = patterns('',
+urlpatterns = [url
     (r'^teacher_grade/$', views.teacher_grade),
     (r'^teacher_grade_submissions/$', views.teacher_grade_submissions),
     (r'^teacher_grade/download/(?P<id>\d+)/(?P<type>[a-z]+)$', views.teacher_grade_download),

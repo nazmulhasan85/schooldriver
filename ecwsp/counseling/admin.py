@@ -1,15 +1,17 @@
+from django.forms import modelform_factory
+
 from django.contrib import admin
 from django.db import models
 from django.forms import CheckboxSelectMultiple
 
 from .models import StudentMeeting, StudentMeetingCategory, FollowUpAction
 from .models import ReferralCategory, ReferralReason, ReferralForm
-import autocomplete_light
+
 
 class StudentMeetingAdmin(admin.ModelAdmin):
     list_display = ['category','display_students','date','reported_by']
     fields = ['category','students','date','notes','file','follow_up_action','follow_up_notes','reported_by']
-    form = autocomplete_light.modelform_factory(StudentMeeting)
+    form = modelform_factory(StudentMeeting, fields=('category','students','date','notes','file','follow_up_action','follow_up_notes','reported_by'))
     
     search_fields = ['students__username', 'students__last_name', 'students__first_name', 'category__name', 'reported_by__username']
     
@@ -37,7 +39,7 @@ class ReferralFormAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
-    form = autocomplete_light.modelform_factory(ReferralForm)
+    form = modelform_factory(ReferralForm, fields=('classroom_teacher','date', 'referred_by', 'student', 'comments', 'referral_reasons'))
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name in ['referred_by','classroom_teacher']:
             kwargs['initial'] = request.user.id

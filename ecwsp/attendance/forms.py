@@ -7,7 +7,7 @@ from models import StudentAttendance, AttendanceStatus
 from ecwsp.sis.models import Student
 from ecwsp.sis.forms import TimeBasedForm
 import datetime
-import autocomplete_light
+import dal
 
 
 class StudentAttendanceForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class StudentAttendanceForm(forms.ModelForm):
     status = forms.ModelChoiceField(widget=forms.Select(attrs={'class':'status',}), queryset=AttendanceStatus.objects.filter(teacher_selectable=True))
 
 
-class StudentMultpleAttendanceForm(autocomplete_light.ModelForm):
+class StudentMultpleAttendanceForm(dal.ModelForm):
     """ Form accepts multiple students """
     class Meta:
         model = StudentAttendance
@@ -30,7 +30,7 @@ class StudentMultpleAttendanceForm(autocomplete_light.ModelForm):
             'time': adminwidgets.AdminTimeWidget(),
         }
         fields = ('date', 'status', 'time', 'notes', 'private_notes')
-    student = autocomplete_light.ModelMultipleChoiceField('StudentUserAutocomplete')
+    student = dal.ModelMultipleChoiceField('StudentUserAutocomplete')
 
 
 class CourseSectionAttendanceForm(forms.Form):
@@ -55,7 +55,7 @@ class AttendanceViewForm(forms.Form):
     order_by = forms.ChoiceField(initial=0, choices=(('Date','Date'),('Status','Status'),))
     include_private_notes = forms.BooleanField(required=False)
     try:
-        student = autocomplete_light.ModelChoiceField('StudentUserAutocomplete')
+        student = dal.ModelChoiceField('StudentUserAutocomplete')
     except ProgrammingError:
         pass
 

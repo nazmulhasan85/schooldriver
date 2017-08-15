@@ -1,3 +1,5 @@
+from django.forms import modelform_factory
+
 from django import forms
 from django.http import HttpResponseRedirect
 from django.contrib import admin
@@ -22,7 +24,7 @@ from ecwsp.administration.models import Configuration
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from custom_field.custom_field import CustomFieldAdmin
-import autocomplete_light
+import dal
 
 import logging
 import sys
@@ -80,6 +82,7 @@ class MapImageWidget(forms.CheckboxInput):
 class WorkTeamForm(forms.ModelForm):
     class Meta:
         model = WorkTeam
+        fields = "__all__"
 
     use_google_maps = forms.BooleanField(required=False, widget=MapImageWidget)
 
@@ -171,7 +174,7 @@ class WorkStudyUserAdmin(UserAdmin,admin.ModelAdmin):
 admin.site.register(WorkTeamUser,WorkStudyUserAdmin)
 
 class StudentAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(StudentWorker)
+    form = modelform_factory(StudentWorker, fields=('first_name', 'last_name', 'day'))
 
     def changelist_view(self, request, extra_context=None):
         """override to hide inactive students by default"""
@@ -262,7 +265,7 @@ admin.site.register(StudentWorkerRoute)
 admin.site.register(PresetComment)
 
 class StudentInteractionAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(StudentInteraction)
+    form = modelform_factory(StudentInteraction, fields=('student', 'type',))
 
     list_display = ('students', 'date', 'type', 'cra', 'comment_Brief', 'reported_by')
     list_filter = ['type', 'date', 'student','student__is_active']
@@ -342,7 +345,7 @@ admin.site.register(TimeSheet, TimeSheetAdmin)
 admin.site.register(CompanyHistory)
 
 class AttendanceAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(Attendance)
+    form = modelform_factory(Attendance, fields=('absence_date', 'makeup_date', 'reason', 'fee', 'student', 'billed','tardy'))
     search_fields = ['student__first_name', 'student__last_name', 'absence_date']
     list_editable = ('makeup_date','reason', 'fee', 'billed')
     list_filter = [('absence_date', DateRangeFilter), 'makeup_date', 'reason', 'fee', 'student','tardy']
@@ -364,7 +367,7 @@ admin.site.register(AttendanceReason)
 admin.site.register(Personality)
 
 class ClientVisitAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(ClientVisit)
+    form = modelform_factory(ClientVisit, fields=('date', 'company', 'notify_mentors', 'notes',))
     fieldsets = [
         (None, {'fields': ['date', 'company', 'notify_mentors', 'notes',]}),
         ("DOL", {'fields': ['dol', 'follow_up_of', 'cra', 'student_worker', 'supervisor',

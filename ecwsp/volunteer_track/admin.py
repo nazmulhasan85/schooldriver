@@ -1,8 +1,10 @@
+from django.forms import modelform_factory
+
 from ecwsp.volunteer_track.models import *
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
-import autocomplete_light
+import dal
 
 import datetime
 
@@ -57,15 +59,15 @@ class VolunteerSiteInline(admin.StackedInline):
     extra = 1
 
 class VolunteerSiteAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(VolunteerSite)
+    form = modelform_factory(VolunteerSite, fields=('volunteer','supervisor','site_approval','contract','hours_confirmed','inactive'))
     list_display = ('volunteer','supervisor','site_approval','contract','hours_confirmed','inactive')
     actions = [approve_site,reject_site,time_fulfilled]
     inlines = [HoursInline]
 admin.site.register(VolunteerSite,VolunteerSiteAdmin)
 
 class VolunteerAdmin(admin.ModelAdmin):
-    form = autocomplete_light.modelform_factory(Volunteer)
-    list_display = ('student','hours_required','hours_completed')
+    form = modelform_factory(Volunteer, fields=('student','hours_required'))
+    list_display = ('student','hours_required')
     list_filter = ['sites', 'student',]
     search_fields = ['student__first_name', 'student__last_name',]
     inlines = [VolunteerSiteInline]

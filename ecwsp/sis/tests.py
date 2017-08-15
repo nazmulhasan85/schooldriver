@@ -33,8 +33,8 @@ class ReportTest(SisTestMixin, TestCase):
         """ Test the setting TRANSCRIPT_SHOW_INCOMPLETE_COURSES_WITHOUT_GRADE
         """
         from constance import config
-        import autocomplete_light
-        autocomplete_light.autodiscover()
+        import dal
+        dal.autodiscover()
         from .scaffold_reports import SisReport
 
         sis_report = SisReport()
